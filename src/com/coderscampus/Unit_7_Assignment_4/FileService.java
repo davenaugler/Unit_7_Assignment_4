@@ -21,16 +21,9 @@ public class FileService {
 					isFirstLine = false;
 					continue; // Skip the first line
 				}
-
-				// System.out.println(line); -- To visualize FILENAME would print to console
-				String[] studentInfo = line.split(",");
-
-				Integer studentID = Integer.parseInt(studentInfo[0]);
-				String studentName = studentInfo[1];
-				String course = studentInfo[2];
-				Integer grade = Integer.parseInt(studentInfo[3]);
-
-				Student student = new Student(studentID, studentName, course, grade);
+				// Example 1: of organizing our student data | Example 2 in Student Constructor 
+//				Student student = new Student(Integer.parseInt(studentInfo[0]), studentInfo[1], studentInfo[2], Integer.parseInt(studentInfo[3]));
+				Student student = new Student(line.split(","));
 				students[counter] = student;
 				counter++;
 

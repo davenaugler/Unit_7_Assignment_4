@@ -5,37 +5,44 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class StudentService {
+	
+	FileService fileService = new FileService();
 
-	public void gatherStudentsIntoCorrectCourse(Student[] students) throws IOException {
-		Student[] compSciStudents = new Student[students.length];
-		Student[] statStudents = new Student[students.length];
-		Student[] apmthStudents = new Student[students.length];
-
-		int compSciCount = 0;
-		int statCount = 0;
-		int apmthCount = 0;
-
+	public void sortAndWriteStudents(Student[] students, String courseCode, String filePath) throws IOException {
+		Student[] courseStudents = new Student[students.length];
+		
+		int count = 0;
+		
 		for (Student student : students) {
 			String courseName = student.getCourse();
-
-			if (courseName.contains("COMPSCI")) {
-				compSciStudents[compSciCount++] = student;
-			} else if (courseName.contains("STAT")) {
-				statStudents[statCount++] = student;
-			} else if (courseName.contains("APMTH")) {
-				apmthStudents[apmthCount++] = student;
+			
+			if (courseName.contains(courseCode)) {
+				courseStudents[count++] = student;
 			}
 		}
-
-		sortStudents(compSciStudents, compSciCount);
-		sortStudents(statStudents, statCount);
-		sortStudents(apmthStudents, apmthCount);
-
-		writeStudentsToCSV(compSciStudents, "course1.csv", compSciCount);
-		writeStudentsToCSV(statStudents, "course2.csv", statCount);
-		writeStudentsToCSV(apmthStudents, "course3.csv", apmthCount);
+		
+		sortStudents(courseStudents, count);
+		writeStudentsToCSV(courseStudents, filePath, count);
 	}
-
+	
+	public void gatherStudentsIntoCorrectCourse(Student[] students) {
+		try {
+			sortAndWriteStudents(students, "COMPSCI", "course1.csv");
+		} catch (IOException e) {
+			System.out.println("Error writing COMPSCI students to file");
+		}
+		try {
+			sortAndWriteStudents(students, "STAT", "course2.csv");
+		} catch (IOException e) {
+			System.out.println("Error writing STAT students to file");
+		}
+		try {
+			sortAndWriteStudents(students, "APMTH", "course3.csv");
+		} catch (IOException e) {
+			System.out.println("Error writing APMTH students to file");
+		}
+	}
+	
 	private void sortStudents(Student[] students, int count) {
 		if (count > 0) {
 			Arrays.sort(students, 0, count);
@@ -56,5 +63,15 @@ public class StudentService {
 				fileWriter.write(System.lineSeparator());
 			}
 		}
+	}
+	
+	public Student[] readStudentsFromFile() {
+		try {
+			return fileService.readFile();
+		} catch (IOException e) {
+			System.out.println("Error in reading file");
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

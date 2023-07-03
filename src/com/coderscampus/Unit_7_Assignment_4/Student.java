@@ -13,6 +13,14 @@ public class Student implements Comparable<Student> {
 		this.course = course;
 		this.grade = grade;
 	}
+	
+	// Example 2: 
+	public Student(String[] studentInfo) {
+		this.studentID = Integer.parseInt(studentInfo[0]);
+		this.studentName = studentInfo[1];
+		this.course = studentInfo[2];
+		this.grade = Integer.parseInt(studentInfo[3]);
+	}
 
 	public Integer getStudentID() {
 		return studentID;

@@ -1,13 +1,9 @@
 package com.coderscampus.Unit_7_Assignment_4;
 
-import java.io.IOException;
-
 public class StudentApp {
-	public static void main(String[] args) throws IOException {
-		FileService fileService = new FileService();
-		Student[] students = fileService.readFile();
-
-		StudentService studentListService = new StudentService();
-		studentListService.gatherStudentsIntoCorrectCourse(students);
+	public static void main(String[] args) {
+		StudentService studentService = new StudentService();
+		Student[] students = studentService.readStudentsFromFile();
+		studentService.gatherStudentsIntoCorrectCourse(students);
 	}
 }
