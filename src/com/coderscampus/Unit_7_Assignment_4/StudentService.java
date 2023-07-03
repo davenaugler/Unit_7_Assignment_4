@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class StudentListService {
+public class StudentService {
 
 	public void gatherStudentsIntoCorrectCourse(Student[] students) throws IOException {
 		Student[] compSciStudents = new Student[students.length];
